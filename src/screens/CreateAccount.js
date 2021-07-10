@@ -144,7 +144,6 @@ const styles = StyleSheet.create({
   inputsWrapper: {
     marginTop: 50,
     paddingHorizontal: 20,
-    // marginBottom: 50,
   },
   inputItemWrapper: {
     marginBottom: 20,
@@ -191,7 +190,6 @@ const styles = StyleSheet.create({
     },
     shadowOpacity: 0.05,
     shadowRadius: 50,
-    // elevation: 8,
   },
   tituloStyles: {
     color: colors.textDark,

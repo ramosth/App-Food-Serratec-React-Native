@@ -15,7 +15,7 @@ import InputText from '../components/InputText';
 import Button from '../components/Button';
 import LinearGradient from 'react-native-linear-gradient';
 
-export default function Login({navigation}) {
+export default function Login({ navigation }) {
   const [email, setEmail] = useState('');
   const [senha, setSenha] = useState('');
   return (
@@ -24,7 +24,7 @@ export default function Login({navigation}) {
         {/* Header */}
         <SafeAreaView>
           <View style={styles.headerWrapper}>
-          <TouchableOpacity>
+            <TouchableOpacity>
               <Image
                 source={require('../assets/images/Icon.png')}
                 style={styles.headerLogo}
@@ -64,18 +64,37 @@ export default function Login({navigation}) {
             />
           </View>
           <View style={styles.buttonForgot}>
-            <Button titulo="Forgot Password" buttonStyles={[styles.buttonForgotStyles]} tituloStyles={[styles.tituloForgotStyles]} onPress={() => navigation.navigate('ForgotPassward')} />
+            <Button
+              titulo="Forgot Password"
+              buttonStyles={[styles.buttonForgotStyles]}
+              tituloStyles={[styles.tituloForgotStyles]}
+              onPress={() => navigation.navigate('ForgotPassward')} />
           </View>
         </View>
         {/* Button */}
         <View style={[styles.buttonSigIn]}>
-          <Button path={require('../assets/images/google.png')} titulo="Sign-in with Google" buttonStyles={styles.buttonStyles} tituloStyles={styles.tituloStyles} />
+          <Button
+            path={require('../assets/images/google.png')}
+            titulo="Sign-in with Google"
+            buttonStyles={styles.buttonStyles}
+            tituloStyles={styles.tituloStyles} />
         </View>
-        <LinearGradient start={{ x: 0.0, y: 0.25 }} end={{ x: 0.5, y: 1.0 }} locations={[0, 0.5, 0.6]} colors={['#FB832D', '#FC7F36', '#FF774C']} style={[styles.buttonCreate, {elevation: 8}]}>
-          <Button titulo="Create an account" buttonStyles={[styles.buttonCreateStyles]} onPress={() => navigation.navigate('CreateAccount')} />
+        <LinearGradient
+          start={{ x: 0.0, y: 0.25 }} end={{ x: 0.5, y: 1.0 }}
+          locations={[0, 0.5, 0.6]}
+          colors={['#FB832D', '#FC7F36', '#FF774C']}
+          style={[styles.buttonCreate, { elevation: 8 }]}>
+          <Button
+            titulo="Create an account"
+            buttonStyles={[styles.buttonCreateStyles]}
+            onPress={() => navigation.navigate('CreateAccount')} />
         </LinearGradient>
         <View style={styles.buttonLogin}>
-          <Button titulo="Login to my account" buttonStyles={styles.buttonLoginStyles} tituloStyles={styles.tituloLoginStyles} onPress={() => navigation.navigate('Home')}/>
+          <Button
+            titulo="Login to my account"
+            buttonStyles={styles.buttonLoginStyles}
+            tituloStyles={styles.tituloLoginStyles}
+            onPress={() => navigation.navigate('Home')} />
         </View>
       </ScrollView>
     </View>
@@ -127,7 +146,6 @@ const styles = StyleSheet.create({
   inputsWrapper: {
     marginTop: 50,
     paddingHorizontal: 20,
-    // marginBottom: 50,
   },
   inputItemWrapper: {
     marginBottom: 20,
@@ -167,7 +185,6 @@ const styles = StyleSheet.create({
     },
     shadowOpacity: 0.05,
     shadowRadius: 50,
-    // elevation: 8,
   },
   tituloStyles: {
     color: colors.textDark,

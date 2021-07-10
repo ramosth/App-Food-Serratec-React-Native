@@ -1,7 +1,7 @@
 /* eslint-disable no-shadow */
 /* eslint-disable prettier/prettier */
 /* eslint-disable react-native/no-inline-styles */
-import React, {useState} from 'react';
+import React, { useState } from 'react';
 import {
   View,
   SafeAreaView,
@@ -80,10 +80,19 @@ export default function Detalhe({ route, navigation }) {
         {/* Button Quantidade */}
         <View style={{ alignItems: 'center' }}>
           <LinearGradient start={{ x: 0.0, y: 0.25 }} end={{ x: 0.5, y: 1.0 }}
-            locations={[0, 0.5, 0.6]} colors={['#FB832D', '#FC7F36', '#FF774C']} style={[styles.buttonCreate, { elevation: 8, borderRadius: 30, width: 120, flexDirection: 'row', justifyContent: 'center' }]}>
-              <Button titulo="-" buttonStyles={[styles.buttonCreateStyles, {marginRight: 20, marginLeft: -10}]} onPress={() => setContador(contador - 1)} disabled={contador === 0 ? true : false} tituloStyles={contador <= 0 ? [styles.tituloDisable] : [{color: colors.white}]} />
-            <Text style={{color: colors.white, marginVertical: 15}}>{contador}</Text>
-            <Button titulo="+" buttonStyles={[styles.buttonCreateStyles, {marginLeft: 10}]} onPress={() => setContador(contador + 1)} />
+            locations={[0, 0.5, 0.6]}
+            colors={['#FB832D', '#FC7F36', '#FF774C']}
+            style={styles.buttonCreate}>
+            <Button titulo="-"
+              buttonStyles={[styles.buttonCreateStyles, { marginRight: 20, marginLeft: -10 }]}
+              onPress={() => setContador(contador - 1)}
+              disabled={contador === 0 ? true : false}
+              tituloStyles={contador <= 0 ? [styles.tituloDisable] : [{ color: colors.white }]} />
+            <Text style={{ color: colors.white, marginVertical: 15 }}>{contador}</Text>
+            <Button
+              titulo="+"
+              buttonStyles={[styles.buttonCreateStyles, { marginLeft: 10 }]}
+              onPress={() => setContador(contador + 1)} />
           </LinearGradient>
         </View>
         {/* Title e infos */}
@@ -130,8 +139,13 @@ export default function Detalhe({ route, navigation }) {
 
       </ScrollView>
       <LinearGradient start={{ x: 0.0, y: 0.25 }} end={{ x: 0.5, y: 1.0 }}
-        locations={[0, 0.5, 0.6]} colors={['#FB832D', '#FC7F36', '#FF774C']} style={[styles.buttonCreate, { elevation: 8, marginHorizontal: 20, borderRadius: 20, marginBottom: 31, height: 51 }]}>
-        <Button titulo="Add to card" buttonStyles={[styles.buttonCreateStyles]} onPress={() => Alert.alert('Carrinho', 'Produto adicionado com sucesso!')} />
+        locations={[0, 0.5, 0.6]}
+        colors={['#FB832D', '#FC7F36', '#FF774C']}
+        style={styles.buttonCreateAddCard}>
+        <Button
+          titulo="Add to card"
+          buttonStyles={[styles.buttonCreateStyles]}
+          onPress={() => Alert.alert('Carrinho', 'Produto adicionado com sucesso!')} />
       </LinearGradient>
     </View>
   );
@@ -202,6 +216,12 @@ const styles = StyleSheet.create({
     marginTop: 10,
   },
   // novos
+  buttonCreate: {
+    elevation: 8, borderRadius: 30, width: 120, flexDirection: 'row', justifyContent: 'center',
+  },
+  buttonCreateAddCard: {
+    elevation: 8, marginHorizontal: 20, borderRadius: 20, marginBottom: 31, height: 51,
+  },
   buttonCreateStyles: {
     backgroundColor: 'transparent',
     shadowColor: colors.textDark,

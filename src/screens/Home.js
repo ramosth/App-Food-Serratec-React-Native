@@ -40,7 +40,7 @@ export default function Home({ navigation }) {
   };
   const renderPopularItem = ({ item }) => {
     return (
-      <TouchableOpacity style={[styles.popularItemWrapper]} onPress={() => navigation.navigate('Detalhe', {item: item})}>
+      <TouchableOpacity style={[styles.popularItemWrapper]} onPress={() => navigation.navigate('Detalhe', { item: item })}>
         <View>
           <Image source={item.image} style={[styles.categoryItemImage, { width: 170, height: 112, marginTop: 20 }]} />
         </View>
@@ -148,11 +148,12 @@ export default function Home({ navigation }) {
           </View>
         </TouchableOpacity>
         <TouchableOpacity onPress={() => navigation.goBack()}>
-          <LinearGradient start={{ x: 0.0, y: 1.0 }} end={{ x: 1.0, y: 1.0 }}
-            locations={[0, 0.5, 1.6]} colors={['#FB832D', '#FC7F36', '#FF774C']} style={[{shadowColor: '#242222', elevation: 8, borderRadius: 50, paddingHorizontal: 2, marginBottom: 30 }]}>
-            <View style={[styles.headerLeft1, {
-              backgroundColor: 'transparent',
-              borderColor: 'transparent'}]}>
+          <LinearGradient
+            start={{ x: 0.0, y: 1.0 }} end={{ x: 1.0, y: 1.0 }}
+            locations={[0, 0.5, 1.6]}
+            colors={['#FB832D', '#FC7F36', '#FF774C']}
+            style={styles.menuSearch}>
+            <View style={[styles.headerLeft1, { backgroundColor: 'transparent', borderColor: 'transparent' }]}>
               <Image
                 source={require('../assets/images/Search.png')}
                 style={[styles.profileImage1]}
@@ -253,16 +254,13 @@ const styles = StyleSheet.create({
     elevation: 2,
   },
   categoryItemWrapper2: {
-    // backgroundColor: '#d8ebdb',
     borderRadius: 100,
     paddingVertical: 34,
     paddingHorizontal: 8,
-    // elevation: 2,
   },
   categoryItemImage: {
     width: 40,
     height: 40,
-    // marginTop: 24,
     alignSelf: 'center',
     marginHorizontal: 20,
     resizeMode: 'contain',
@@ -338,7 +336,6 @@ const styles = StyleSheet.create({
   },
   addPizzaButton: {
     paddingHorizontal: 24,
-    // paddingVertical: 16,
     borderTopLeftRadius: 25,
     borderBottomRightRadius: 25,
   },
@@ -360,12 +357,12 @@ const styles = StyleSheet.create({
     width: 210,
     height: 125,
     resizeMode: 'contain',
-    // Determina como redimensionar a imagem quando o quadro(frame) não corresponde às dimensões da imagem bruta. Padrão é cover.
-    //Cover: ambas as dimensões (largura e altura) da imagem sejam iguais ou maiores do que a dimensão correspondente da visualização.
-    //Contain: ambas as dimensões (largura e altura) da imagem sejam iguais ou menores que a dimensão correspondente da visualização.
   },
   menuIcones: {
     flexDirection: 'row', alignItems: 'center', justifyContent: 'space-around', borderTopLeftRadius: 40, borderTopRightRadius: 40, backgroundColor: colors.white, height: 100, shadowColor: colors.black, shadowOffset: { width: 0, height: 2 }, shadowOpacity: 0.05, shadowRadius: 40, elevation: 2, paddingBottom: 35, position: 'absolute', bottom: 0, width: '100%',
+  },
+  menuSearch: {
+    shadowColor: '#242222', elevation: 8, borderRadius: 50, paddingHorizontal: 2, marginBottom: 30,
   },
   profileImage1: {
     resizeMode: 'contain',

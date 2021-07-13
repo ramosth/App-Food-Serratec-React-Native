@@ -15,6 +15,7 @@ import colors from '../assets/colors/colors';
 import InputText from '../components/InputText';
 import Button from '../components/Button';
 import LinearGradient from 'react-native-linear-gradient';
+// import { UsuarioLogado } from '../contexto/contextUsuario';
 
 export default function CreateAccount({ navigation }) {
   const [email, setEmail] = useState('');
@@ -24,6 +25,10 @@ export default function CreateAccount({ navigation }) {
     Alert.alert('Cadastro Efetuado', 'Usuário registrado com sucesso!');
     navigation.navigate('Login');
   };
+
+// const {usuario} = useContext(UsuarioLogado);
+// console.log('no cadastro: ', usuario);
+
   return (
     <View style={styles.container}>
       <ScrollView showsVerticalScrollIndicator={false}>

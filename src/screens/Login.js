@@ -1,6 +1,6 @@
 /* eslint-disable react-native/no-inline-styles */
 /* eslint-disable prettier/prettier */
-import React, { useState } from 'react';
+import React, { useContext, useState } from 'react';
 import {
   View,
   SafeAreaView,
@@ -14,10 +14,37 @@ import colors from '../assets/colors/colors';
 import InputText from '../components/InputText';
 import Button from '../components/Button';
 import LinearGradient from 'react-native-linear-gradient';
+import { UsuarioLogado } from '../contexto/contextUsuario';
 
 export default function Login({ navigation }) {
   const [email, setEmail] = useState('');
   const [senha, setSenha] = useState('');
+
+  // ACESSANDO O CONTEXTO
+  const { usuario, login } = useContext(UsuarioLogado);
+  console.log('usuario => ', usuario);
+
+  // useEffect(() => {
+  //   login(
+  //     {
+  //       email: 'email@gmail.com',
+  //     }
+  //   );
+  // }, []);
+
+  const fazerLogin = () => {
+    // fazer aqui *** uma requisição a uma API.. que retornaria um objeto usuarioCadastrado, e salvaria como contextoGlobal
+    const usuarioCadastrado = {
+      id: '1',
+      nome: 'Mário',
+      email: 'mario@gmail.com',
+      idade: 42,
+      premium: true,
+    };
+    login(usuarioCadastrado);
+    // navigation.navigate('Home'); //não vai mais precisar dessa rota, pois só quem tem acesso a tela de Home é o usuarioCadastrado que fez login.
+  };
+
   return (
     <View style={styles.container}>
       <ScrollView showsVerticalScrollIndicator={false}>
@@ -94,7 +121,7 @@ export default function Login({ navigation }) {
             titulo="Login to my account"
             buttonStyles={styles.buttonLoginStyles}
             tituloStyles={styles.tituloLoginStyles}
-            onPress={() => navigation.navigate('Home')} />
+            onPress={fazerLogin} />
         </View>
       </ScrollView>
     </View>

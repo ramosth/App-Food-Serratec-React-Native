@@ -16,8 +16,13 @@ import categoriesData from '../assets/data/categoriaData';
 import popularData from '../assets/data/popularData';
 import colors from '../assets/colors/colors';
 import LinearGradient from 'react-native-linear-gradient';
+import { UsuarioLogado } from '../contexto/contextUsuario';
 
 export default function Home({ navigation }) {
+
+  const {usuario, logout} = React.useContext(UsuarioLogado);
+  console.log('Home: ', usuario);
+
   const renderCategoryItem = ({ item }) => {
     return (
       <View
@@ -85,7 +90,7 @@ export default function Home({ navigation }) {
               </View>
               <Text style={styles.searchTextSub}>lekki phase 1, Estate</Text>
             </TouchableOpacity>
-            <TouchableOpacity onPress={() => navigation.goBack()}>
+            <TouchableOpacity onPress={() => logout()}>
               <View style={styles.headerRight}>
                 <Image
                   source={require('../assets/images/profile.png')}

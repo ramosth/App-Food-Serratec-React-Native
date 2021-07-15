@@ -1,6 +1,6 @@
 /* eslint-disable prettier/prettier */
 /* eslint-disable react-native/no-inline-styles */
-import * as React from 'react';
+import React, { useEffect, useState } from 'react';
 import {
   View,
   SafeAreaView,
@@ -17,11 +17,103 @@ import popularData from '../assets/data/popularData';
 import colors from '../assets/colors/colors';
 import LinearGradient from 'react-native-linear-gradient';
 import { UsuarioLogado } from '../contexto/contextUsuario';
+  import { api } from '../services/Api/api';
 
 export default function Home({ navigation }) {
 
+  const [produtos, setProdutos] = useState([]);
+
+useEffect(() => {
+  const obterProdutoAxios = async () => {
+    try {
+      const response = await api.get('/produtos');
+      setProdutos(response.data);
+      console.log('Response: ', response);
+      console.log('Response: ', response.data);
+    } catch (error) {
+      console.log('Response: ', error);
+    }
+  };
+  obterProdutoAxios();
+}, []);
+
+// const criarProdutoAxios = async () => {
+//   try {
+//     const response = await api.post('/produtos', {
+//       descricao: "Boston's most advanced compression wear technology increases muscle oxygenation, stabilizes active muscles",
+//       name: "Ms. Milton Howell",
+//       imagem: "http://placeimg.com/640/480",
+//       preco: "697.00",
+//       id: "21",
+//       });
+//     setProdutos(response.data);
+//     console.log('Response: ', response);
+//     console.log('Response: ', response.data);
+//   } catch (error) {
+//     console.log('Response: ', error);
+//   }
+// };
+
   const {usuario, logout} = React.useContext(UsuarioLogado);
   console.log('Home: ', usuario);
+
+
+
+  // const [idProduto, setIdProduto] = useState(0);
+
+  // const obterProdutos = async (idProduto) => {
+  //   try {
+  //     const response = await fetch(
+  //       'https://60ef4efff587af00179d39bd.mockapi.io/ecommerce/produtos',
+  //       {
+  //         method: 'GET',
+  //       },
+  //     );
+  //     const jsonResponse = await response.json();
+  //     console.log('Resposta: ', jsonResponse);
+  //   } catch (error) {
+  //     // tratar ou mostrar mensagem do erro
+  //   }
+  // };
+
+  // const obterProdutosPorId = async (idProduto) => {
+  //   try {
+  //     const response = await fetch(
+  //       `url${idProduto}`,
+  //       {
+  //         method: 'GET',
+  //       },
+  //     );
+  //     const jsonResponse = await response.json();
+  //     console.log('Resposta: ', jsonResponse);
+  //   } catch (error) {
+  //     // tratar ou mostrar mensagem do erro
+  //   }
+  // };
+
+  // const adicionarProdutos = async () => {
+  //   try {
+  //     const response = await fetch(
+  //       'url',
+  //       {
+  //         method: 'POST',
+  //         body: {
+  //           name: 'celular',
+  //           Description: 'Samsung S7 36gb',
+  //           image: 'url',
+  //         },
+  //       },
+  //     );
+  //     const jsonResponse = await response.json();
+  //     console.log('Resposta: ', jsonResponse);
+  //   } catch (error) {
+  //     // tratar ou mostrar mensagem do erro
+  //   }
+  // };
+
+  // useEffect(() => {
+  //   obterProdutos();
+  // }, []);
 
   const renderCategoryItem = ({ item }) => {
     return (
@@ -44,6 +136,33 @@ export default function Home({ navigation }) {
     );
   };
   const renderPopularItem = ({ item }) => {
+    return (
+      <TouchableOpacity style={[styles.popularItemWrapper]}>
+        <View>
+          <Image source={{uri: item.imagem}} style={[styles.popularItemImage, { width: 100, height: 120 }]} />
+        </View>
+        <View style={{ marginTop: 20, marginHorizontal: 15 }}>
+          <Text style={{ fontSize: 14, fontFamily: 'Montserrat-Bold', fontWeight: '500' }}>{item.name}</Text>
+          <Text style={{ fontSize: 12, fontFamily: 'Montserrat-Medium', marginTop: 5, lineHeight: 19 }}>{item.descricao}</Text>
+        </View>
+        <View style={styles.popularCardBottom}>
+          <View style={styles.ratingWrapper}>
+            <Image
+              source={require('../assets/images/Star.png')}
+            />
+            <Text style={styles.rating}>{item.rating}+</Text>
+          </View>
+          <View style={styles.addPizzaButton}>
+            <Image
+              source={require('../assets/images/Heart.png')}
+            />
+          </View>
+        </View>
+      </TouchableOpacity>
+    );
+  };
+
+  const renderPopularItem2 = ({ item }) => {
     return (
       <TouchableOpacity style={[styles.popularItemWrapper]} onPress={() => navigation.navigate('Detalhe', { item: item })}>
         <View>
@@ -116,7 +235,24 @@ export default function Home({ navigation }) {
             />
           </View>
         </View>
-        {/* Popular */}
+        {/* Popular 1*/}
+        <View style={styles.popularWrapper}>
+          <View style={{ flexDirection: 'row', alignItems: 'center', justifyContent: 'space-between', marginBottom: 40 }}>
+            <Text style={styles.popularTitle}>Popular restaurants</Text>
+            <Text style={styles.popularSeeTitle}>View all(29)</Text>
+          </View>
+          {/* Cards */}
+          <View>
+            <FlatList
+              data={produtos}
+              renderItem={renderPopularItem}
+              keyExtractor={item => item.id}
+              horizontal={true}
+              showsHorizontalScrollIndicator={false}
+            />
+          </View>
+        </View>
+        {/* Popular 2*/}
         <View style={styles.popularWrapper}>
           <View style={{ flexDirection: 'row', alignItems: 'center', justifyContent: 'space-between', marginBottom: 40 }}>
             <Text style={styles.popularTitle}>Popular restaurants</Text>
@@ -126,7 +262,7 @@ export default function Home({ navigation }) {
           <View>
             <FlatList
               data={popularData}
-              renderItem={renderPopularItem}
+              renderItem={renderPopularItem2}
               keyExtractor={item => item.id}
               horizontal={true}
               showsHorizontalScrollIndicator={false}
@@ -270,6 +406,13 @@ const styles = StyleSheet.create({
     marginHorizontal: 20,
     resizeMode: 'contain',
   },
+  popularItemImage: {
+    marginTop: 10,
+    borderRadius: 10,
+    alignSelf: 'center',
+    marginHorizontal: 20,
+    resizeMode: 'cover',
+  },
   categoryItemTitle: {
     textAlign: 'center',
     fontFamily: 'Sk-Modernist-Regular',
@@ -294,7 +437,7 @@ const styles = StyleSheet.create({
   },
   popularItemWrapper: {
     marginLeft: 20,
-    height: 270,
+    height: 300,
     width: 220,
     backgroundColor: colors.white,
     marginRight: 20,

@@ -1,6 +1,6 @@
 /* eslint-disable react-native/no-inline-styles */
 /* eslint-disable prettier/prettier */
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import {
   View,
   SafeAreaView,
@@ -15,6 +15,7 @@ import colors from '../assets/colors/colors';
 import InputText from '../components/InputText';
 import Button from '../components/Button';
 import LinearGradient from 'react-native-linear-gradient';
+import AsyncStorage from '@react-native-async-storage/async-storage';
 // import { UsuarioLogado } from '../contexto/contextUsuario';
 
 export default function CreateAccount({ navigation }) {
@@ -25,6 +26,20 @@ export default function CreateAccount({ navigation }) {
     Alert.alert('Cadastro Efetuado', 'Usuário registrado com sucesso!');
     navigation.navigate('Login');
   };
+
+  useEffect(() => {
+    const recuperarDadosSalvos = async () => {
+      const dadoSalvo = await AsyncStorage.getItem('Login');
+      console.log('dado salvo', dadoSalvo);
+      if (dadoSalvo) {
+        const convertido = JSON.parse(dadoSalvo);
+        setEmail(convertido.email);
+        setSenha(convertido.senha);
+        console.log('dado salvo cadastro', convertido);
+      }
+    };
+    recuperarDadosSalvos();
+  }, []);
 
 // const {usuario} = useContext(UsuarioLogado);
 // console.log('no cadastro: ', usuario);

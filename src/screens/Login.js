@@ -1,6 +1,6 @@
 /* eslint-disable react-native/no-inline-styles */
 /* eslint-disable prettier/prettier */
-import React, { useContext, useState } from 'react';
+import React, { useContext, useEffect, useState } from 'react';
 import {
   View,
   SafeAreaView,
@@ -15,6 +15,7 @@ import InputText from '../components/InputText';
 import Button from '../components/Button';
 import LinearGradient from 'react-native-linear-gradient';
 import { UsuarioLogado } from '../contexto/contextUsuario';
+import AsyncStorage from '@react-native-async-storage/async-storage';
 
 export default function Login({ navigation }) {
   const [email, setEmail] = useState('');
@@ -24,13 +25,27 @@ export default function Login({ navigation }) {
   const { usuario, login } = useContext(UsuarioLogado);
   console.log('usuario => ', usuario);
 
-  // useEffect(() => {
-  //   login(
-  //     {
-  //       email: 'email@gmail.com',
-  //     }
-  //   );
-  // }, []);
+  useEffect(() => {
+    const recuperarDadosSalvos = async () => {
+      const dadoSalvo = await AsyncStorage.getItem('Login');
+      console.log('dado salvo', dadoSalvo);
+      if (dadoSalvo) {
+        const convertido = JSON.parse(dadoSalvo);
+        setEmail(convertido.email);
+        setSenha(convertido.senha);
+        console.log('dado salvo', convertido);
+      }
+    };
+    recuperarDadosSalvos();
+  }, []);
+
+  // const setar = async(value) => {
+  //   setEmail(value);
+  //   const dadoSalvo = await AsyncStorage.getItem(value);
+  //   if (dadoSalvo) {
+  //     setSenha(JSON.parse(dadoSalvo).senha);
+  //   }
+  // };
 
   const fazerLogin = () => {
     // fazer aqui *** uma requisição a uma API.. que retornaria um objeto usuarioCadastrado, e salvaria como contextoGlobal
@@ -39,10 +54,14 @@ export default function Login({ navigation }) {
       nome: 'Mário',
       email: 'mario@gmail.com',
       idade: 42,
-      premium: true,
     };
     login(usuarioCadastrado);
     // navigation.navigate('Home'); //não vai mais precisar dessa rota, pois só quem tem acesso a tela de Home é o usuarioCadastrado que fez login.
+  };
+
+  const lembrarSenha = () => {
+    // AsyncStorage.setItem('Login', JSON.stringify({ email: email, senha: senha })); //salvar um dado -- (chave, valor)
+    AsyncStorage.setItem('Login', JSON.stringify({ email: email, senha: senha })); //salvar um dado -- (chave, valor)
   };
 
   return (
@@ -95,7 +114,7 @@ export default function Login({ navigation }) {
               titulo="Forgot Password"
               buttonStyles={[styles.buttonForgotStyles]}
               tituloStyles={[styles.tituloForgotStyles]}
-              onPress={() => navigation.navigate('ForgotPassward')} />
+              onPress={lembrarSenha} />
           </View>
         </View>
         {/* Button */}

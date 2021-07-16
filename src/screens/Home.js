@@ -18,23 +18,39 @@ import colors from '../assets/colors/colors';
 import LinearGradient from 'react-native-linear-gradient';
 import { UsuarioLogado } from '../contexto/contextUsuario';
   import { api } from '../services/Api/api';
+import AsyncStorage from '@react-native-async-storage/async-storage';
 
 export default function Home({ navigation }) {
 
   const [produtos, setProdutos] = useState([]);
+  const [email, setEmail] = useState('');
 
 useEffect(() => {
   const obterProdutoAxios = async () => {
     try {
       const response = await api.get('/produtos');
       setProdutos(response.data);
-      console.log('Response: ', response);
-      console.log('Response: ', response.data);
+      // console.log('Response: ', response);
+      // console.log('Response: ', response.data);
     } catch (error) {
       console.log('Response: ', error);
     }
   };
   obterProdutoAxios();
+}, []);
+
+useEffect(() => {
+  const recuperarDadosSalvos = async () => {
+    const dadoSalvo = await AsyncStorage.getItem('Login');
+    console.log('dado salvo', dadoSalvo);
+    if (dadoSalvo) {
+      const convertido = JSON.parse(dadoSalvo);
+      setEmail(JSON.parse(dadoSalvo.email));
+      console.log('dado salvo home', convertido);
+      console.log('EMAIL', convertido.email);
+    }
+  };
+  recuperarDadosSalvos();
 }, []);
 
 // const criarProdutoAxios = async () => {
@@ -207,7 +223,7 @@ useEffect(() => {
                 <Text style={styles.searchText}>Delivery to</Text>
                 <Feather name="chevron-down" size={14} color={colors.textDark} />
               </View>
-              <Text style={styles.searchTextSub}>lekki phase 1, Estate</Text>
+              <Text style={styles.searchTextSub}>{email}</Text>
             </TouchableOpacity>
             <TouchableOpacity onPress={() => logout()}>
               <View style={styles.headerRight}>
